@@ -7,6 +7,7 @@ void mostrarAlumnos(int[], char[][20], int[], int[], float[], int);
 float calcularPromedio(int, int);
 int cargarAlumno(int[], char[][20], int[], int[], float[], int);
 int modificarAlumno(int[], char[][20], int[], int[], float[], int);
+int bajaAlumno(int[], char[][20], int[], int[], float[], int);
 
 int main()
 {
@@ -20,7 +21,7 @@ int main()
     int i;
     do
     {
-        printf("1. ALTAS\n2. MOSTRAR\n3. MODIFICAR\n4.BAJA\n5.ORDENAR (por nombre)\n9. SALIR\nElija una opcion: ");
+        printf("1. ALTAS\n2. MOSTRAR\n3. MODIFICAR\n4. BAJA\n5. ORDENAR (por nombre)\n9. SALIR\nElija una opcion: ");
         scanf("%d", &opcion);
 
         switch(opcion)
@@ -44,7 +45,7 @@ int main()
         break;
 
         case 3:
-            modificarAlumno(legajo,nombre,nota1,nota2,promedio,TAM);
+            index=modificarAlumno(legajo,nombre,nota1,nota2,promedio,TAM);
             if(index == -1)
             {
                 printf("Legajo no encontrado\n");
@@ -52,6 +53,17 @@ int main()
             else
             {
                 printf("Alumno modificado\n");
+            }
+
+        case 4:
+            index=bajaAlumno(legajo,nombre,nota1,nota2,promedio,TAM);
+            if(index == -1)
+            {
+                printf("Legajo no encontrado\n");
+            }
+            else
+            {
+                printf("Alumno dado de baja\n");
             }
 
         }
@@ -161,6 +173,26 @@ int modificarAlumno(int legajos[], char nombres[][20], int nota1[], int nota2[],
         scanf("%d", &nota2[index]);
         promedio[index]=calcularPromedio(nota1[index],nota2[index]);
     }
+    return index;
+}
 
+int bajaAlumno(int legajos[], char nombres[][20], int nota1[], int nota2[], float promedio[], int tam)
+{
+    int numeroLegajo;
+    int index = -1;
+
+    printf("\nIngrese legajo a dar de baja: ");
+    scanf("%d", &numeroLegajo);
+
+    index = buscarInt(legajos,tam,numeroLegajo);
+
+    if(index!=-1)
+    {
+        legajos[index] = 0;
+        nombres[index][19] = 0;
+        nota1[index] = 0;
+        nota2[index] = 0;
+        promedio[index] = 0;
+    }
     return index;
 }
